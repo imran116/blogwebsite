@@ -1,0 +1,24 @@
+<section class="overlay-menu">
+      <div class="container">
+        <div class="row">
+          <div class="main-menu">
+              <ul>
+
+                  <li>
+                      <a href="{% url 'about-us' %}">About Us</a>
+                  </li>
+                  <li>
+                      <a href="{% url 'blog' %}">Blog Entries</a>
+                  </li>
+                  {% for menu in menu_obj %}
+                   <li>
+                      <a href="">{{ menu.menu_name }}</a>
+                  </li>
+                  {% endfor %}
+
+              </ul>
+              <p>Thin Positive and Do positive!</p>
+          </div>
+        </div>
+      </div>
+    </section>

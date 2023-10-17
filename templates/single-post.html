@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main-container %}
+
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}">HIGH<em>WAY</em></a>
+        </div>
+        <div class="menu-icon">
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="page-heading">
+        <div class="container">
+            <div class="heading-content">
+                <h1>{{ category_name }} <em>Related Post</em></h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="blog-entries">
+        <div class="container">
+            <div class="col-md-9">
+                <div class="blog-posts">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="single-blog-post">
+                                <img src="{{ blog_obj.blog_image.url }}" alt="">
+                                <div class="text-content">
+                                    <h2>{{ blog_obj.blog_title }}</h2>
+                                    <span><a href="#">Admin</a> / <a href="#">{{ blog_obj.timeStamp }}</a> / <a
+                                            href="#">{{ blog_obj.category }}</a></span>
+                                    <p>{{ blog_obj.blog_desc }}
+                                        <br><br><a href="#" onclick="goBack()">Back to Blog</a></p>
+
+                                    <div class="tags-share">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="tags">
+                                                    <li>Tags:</li>
+
+                                                    {% for tag in blog_obj.tag.all %}
+                                                    <li><a href="{% url 'search' %}?q={{ tag }}">{{ tag }}</a>,</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="share">
+                                                    <li>Share:</li>
+                                                    <li><a href="#">facebook</a>,</li>
+                                                    <li><a href="#">twitter</a>,</li>
+                                                    <li><a href="#">behance</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="side-bar">
+                    <div class="search">
+                        <fieldset>
+                            <form action="{% url 'search' %}" method="get">
+                                <input name="q" type="text" class="form-control" id="q" placeholder="Search..."
+                                       required="">
+                            </form>
+                        </fieldset>
+                    </div>
+                    <div class="archives">
+                        <div class="sidebar-heding">
+                            <h2>Archives</h2>
+                        </div>
+                        <ul>
+                            {% for blog in blog_timestamp %}
+                                <li><a href="#">> {{ blog.timeStamp }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="recent-posts">
+                        <div class="sidebar-heding">
+                            <h2>Recent Posts</h2>
+                        </div>
+                        <ul>
+                            {% for recent_blog in recent_blog_obj %}
+                            <li><a href="{% url 'blog-detail' recent_blog.id %}">
+                                <img src="{{ recent_blog.blog_image.url }}" alt="Recent Post 1">
+                                <div class="text">
+                                    <h6>{{ recent_blog.blog_title }}</h6>
+                                    <span>{{ recent_blog.timeStamp }}</span>
+                                </div>
+                            </li>
+                            </a>
+                            {% endfor %}
+
+
+
+                        </ul>
+                    </div>
+                     <div class="categories">
+                        <div class="sidebar-heding">
+                            <h2>Categories</h2>
+                        </div>
+                        <ul>
+                            {% for category in category_obj %}
+                                <li>
+                                    <a href="{% url 'search' %}?q={{ category.category_name }}">>{{ category.category_name }}
+                                        ({{ category.blog_set.count }})</a></li>
+                            {% endfor %}
+
+
+                        </ul>
+                    </div>
+                    <div class="latest-gallery">
+                        <div class="sidebar-heding">
+                            <h2>Latest Gallery</h2>
+                        </div>
+                        <ul>
+                            {% for latest_gallery in latest_gallery_obj %}
+                            <li><a href="{% url 'home' %}"><img src="{{ latest_gallery.portfolio_image.url }}" alt=""></a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <p>Copyright &copy; 2018 Company Name
+
+                    | Designed by TemplateMo</p>
+            </div>
+        </div>
+    </footer>
+
+{% include 'message-form.html' %}
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+
+    {% include 'menu.html' %}
+
+
+{% endblock %}
+
+
+
